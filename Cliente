@@ -1,0 +1,69 @@
+@@ -0,0 +1,67 @@
+<html>
+<head>
+
+	<title>Cliente</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="/projeto/css/bootstrap.css">
+	<script type="text/javascript" src="/projeto/js/bootstrap.js"> </script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+
+      </a>
+    </div>
+  </div>
+</nav>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><a href="produto.php">Produto</a></li>
+  <li role="presentation"class="active"><a href="cliente.php">Cliente</a></li>
+  <li role="presentation"><a href="pedido.php">Pedido</a></li>
+</ul>
+
+<form method="POST" action="cliente.php">
+  <div class="form-group">
+  	<h3>Cadastro de Cliente</h3>
+    <label for="InputName">Nome</label>
+    <input type="name" class="form-control" id="InputName" name="nomeCliente" placeholder="Nome" required>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Email</label>
+    <input type="email" class="form-control" id="inputEmail" name="emailCliente" placeholder="Email" required>
+  </div>
+  <div class="form-group">
+    <label for="inputTelefone">Telefone</label>
+    <input type="tel" class="form-control" id="inputTelefone" name="telefoneCliente" placeholder="Telefone" required>
+  </div>
+
+
+  <button type="submit" class="btn btn-default">Salvar</button>
+  <button type="search" class="btn btn-default">Mostrar todos</button>
+</form>
+
+  <?php
+require 'BDCliente.php';
+
+    if(isset($_POST['nomeCliente']) && isset($_POST['emailCliente']) && isset($_POST['telefoneCliente'])){
+    
+    $nomeCliente = $_POST['nomeCliente'];
+    $emailCliente = $_POST['emailCliente'];
+    $telefoneCliente = $_POST['telefoneCliente'];
+
+    $banco = new BDCliente($nomeCliente,$emailCliente,$telefoneCliente);
+
+    $banco->inserir();
+
+    $banco->select();
+    
+}
+
+?>
+</body>
+</html>
+\ No newline at end of file
