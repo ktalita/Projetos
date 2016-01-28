@@ -1,0 +1,32 @@
+@@ -0,0 +1,30 @@
+<?php 
+
+	class BDCliente {
+
+		private $banco;
+		private $nome;
+		private $email;
+		private $telefone;
+
+		public function __construct($nome, $email, $telefone){
+ 			$this->banco = new PDO('mysql:host=talitakarina;dbname=test', 'talita','talita')or print (mysql_error());
+ 			$this->nome = $nome;
+ 			$this->email = $email;
+ 			$this->telefone = $telefone;
+   		}
+
+		public function inserir(){
+			$novo_cliente = array('nome'=>$this->nome,'telefone'=>$this->telefone,'email'=>$this->email);
+  			$this->banco->prepare('INSERT INTO cliente (nomeCliente,teleCliente,emaiCliente) VALUES (:nome,:telefone,:email)')->execute($novo_cliente);
+		}
+
+		public function select(){
+			$consulta = $this->banco->query("SELECT idCliente, nomeCliente, emaiCliente, teleCliente FROM cliente;");
+			while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+   			echo "ID: {$linha['idCliente']} - Nome: {$linha['nomeCliente']} - 
+   					Email: {$linha['emaiCliente']} - Telefone - {$linha['teleCliente']}<br />";
+			}
+		}
+	}
+?>
+\ No newline at end of file
