@@ -1,0 +1,70 @@
+@@ -0,0 +1,68 @@
+<html>
+<head>
+
+	<title>Pedido</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="/projeto/css/bootstrap.css">
+	<script type="text/javascript" src="/projeto/js/bootstrap.js"> </script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+
+      </a>
+    </div>
+  </div>
+</nav>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><a href="produto.php">Produto</a></li>
+  <li role="presentation"><a href="cliente.php">Cliente</a></li>
+  <li role="presentation"class="active"><a href="pedido.php">Pedido</a></li>
+</ul>
+
+<form method="POST" action="pedido.php">
+  <div class="form-group">
+  	<h3>Cadastro de Pedido</h3>
+    <label for="InputName">ID Cliente</label>
+    <input type="text" class="form-control" id="InputIdCliente" name="idCliente" placeholder="Id Cliente" required>
+  </div>
+  <div class="form-group">
+    <label for="InputDescricao">ID Produto</label>
+    <input type="text" class="form-control" id="InputIdProduto" name="idProduto" placeholder="Id Produto" required >
+  </div>
+  <div class="form-group">
+    <label for="InputPreco">Quantidade</label>
+    <input type="text" class="form-control" id="InputQtd" name="qtdPedido" placeholder="Quantidade" required>
+  </div>
+
+  <button type="submit" class="btn btn-default">Salvar</button>
+   <button type="search" class="btn btn-default">Mostrar todos</button>
+
+</form>
+
+     <?php
+  require 'BDPedido.php';
+
+    if(isset($_POST['idCliente']) && isset($_POST['idProduto']) && isset($_POST['idCliente'])){
+    
+    $idCliente = $_POST['idCliente'];
+    $idProduto = $_POST['idProduto'];
+    $qtdPedido = $_POST['qtdPedido'];
+
+    $banco = new BDPedido($idCliente,$idProduto,$qtdPedido);
+
+    $banco->inserir();
+
+    $banco->select();
+    }
+?>
+
+
+
+</body>
+</html>
+\ No newline at end of file
