@@ -1,0 +1,35 @@
+@@ -0,0 +1,33 @@
+<?php 
+
+	class BDProduto {
+
+		private $banco;
+		private $nome;
+		private $descricao;
+		private $preco;
+		private $qtd;
+
+	public function __construct($nome, $descricao, $preco, $qtd){
+ 			$this->banco = new PDO('mysql:host=talitakarina;dbname=test', 'talita','talita')or print (mysql_error());
+ 			$this->nome = $nome;
+ 			$this->descricao = $descricao;
+ 			$this->preco = $preco;
+ 			$this->qtd = $qtd;
+   		}
+
+		public function inserir(){
+			$novo_cliente = array('nome'=>$this->nome,'descricao'=>$this->descricao,'preco'=>$this->preco,'qtd'=>$this->qtd);
+  			$this->banco->prepare('INSERT INTO produto (nomeProduto,precProduto,descProduto,qtdProduto) VALUES (:nome,:preco,:descricao,:qtd)')->
+  			execute($novo_cliente);
+		}
+
+		public function select(){
+			$consulta = $this->banco->query("SELECT idProduto, nomeProduto, precProduto, descProduto, qtdProduto FROM produto;");
+			while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+   			echo "ID: {$linha['idProduto']} - Nome: {$linha['nomeProduto']} - Preco: {$linha['precProduto']} - 
+   			Qtd: {$linha['qtdProduto']} - Descricao - {$linha['descProduto']}<br />";
+			}
+		}
+	}
+?>
+\ No newline at end of file
