@@ -1,0 +1,73 @@
+@@ -0,0 +1,71 @@
+<html>
+<head>
+
+	<title>Produto</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="/projeto/css/bootstrap.css">
+	<script type="text/javascript" src="/projeto/js/bootstrap.js"> </script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+
+      </a>
+    </div>
+  </div>
+</nav>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="produto.php">Produto</a></li>
+  <li role="presentation"><a href="cliente.php">Cliente</a></li>
+  <li role="presentation"><a href="pedido.php">Pedido</a></li>
+</ul>
+
+<form method="POST" action="produto.php" name="dados" onSubmit="return validarDados();">
+  <div class="form-group">
+  	<h3>Cadastro de Produto</h3>
+    <label for="nomeProduto">Nome</label>
+    <input type="name" class="form-control" id="nomeProduto" name="nomeProduto" placeholder="Nome" required>
+  </div>
+  <div class="form-group">
+    <label for="descricaoProduto">Descricao</label>
+    <input type="text" class="form-control" id="descricaoProduto" name="descricaoProduto" placeholder="Descricao">
+  </div>
+  <div class="form-group">
+    <label for="precoProduto">Preco</label>
+    <input type="value" class="form-control" id="precoProduto" name="precoProduto" placeholder="Preco" required>
+  </div>
+  <div class="form-group">
+    <label for="qtdProduto">Quantidade</label>
+    <input type="value" class="form-control" id="qtdProduto" name="qtdProduto" placeholder="Quantidade" required>
+  </div>
+
+
+  <button type="submit" class="btn btn-default">Salvar</button>
+   <button type="search" class="btn btn-default">Mostrar todos</button>
+</form>
+
+   <?php
+  require 'BDProduto.php';
+
+  if(isset($_POST['nomeProduto']) && isset($_POST['descricaoProduto']) && isset($_POST['precoProduto']) && isset($_POST['qtdProduto'])){
+
+    $nomeProduto = $_POST['nomeProduto'];
+    $descricaoProduto = $_POST['descricaoProduto'];
+    $precoProduto = $_POST['precoProduto'];
+    $qtdProduto = $_POST['qtdProduto'];
+
+    $banco = new BDProduto($nomeProduto,$descricaoProduto,$precoProduto, $qtdProduto);
+
+    $banco->inserir();
+    $banco->select();
+  }
+?>
+
+</body>
+</html>
+\ No newline at end of file
