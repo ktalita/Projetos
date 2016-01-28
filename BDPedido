@@ -1,0 +1,46 @@
+@@ -0,0 +1,44 @@
+<?php 
+
+	class BDPedido {
+
+		private $cliente;
+		private $produto;
+		private $qtd;
+		private $qtdProduto;
+
+		public function __construct($cliente, $produto, $qtd){
+ 			
+ 			$this->banco = new PDO('mysql:host=talitakarina;dbname=test', 'talita','talita')or print (mysql_error());
+ 			$this->cliente = $cliente;
+ 			$this->produto = $produto;
+ 			$this->qtd = $qtd;
+ 			//echo "Dados recebidos: {$this->cliente} - {$this->produto} - {$this->qtd}";
+   		}
+
+		public function inserir(){
+			$novo_cliente = array('cliente'=>$this->cliente,'produto'=>$this->produto,'qtd'=>$this->qtd);
+  			$this->banco->prepare('INSERT INTO pedido (idCliente,idProduto,qtdPedido) VALUES (:cliente,:produto,:qtd)')
+  			->execute($novo_cliente);
+
+			
+			$consulta = $this->banco->query("SELECT idProduto, qtdProduto FROM produto;");
+			
+			while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+   			 		if($linha['idProduto'] == $this->produto){
+   			 			$this->qtdProduto = $linha['qtdProduto'];
+   			 			$novo_pedido = array('produto'=>$this->produto,'qtd'=>$this->qtd,'qtdProduto'=>$this->qtdProduto);
+					$this->banco->prepare('UPDATE produto SET qtdProduto = (:qtdProduto-:qtd) WHERE idProduto = (:produto)')
+					->execute($novo_pedido);
+				}
+			}
+		}
+
+		public function select(){
+			$consulta = $this->banco->query("SELECT idCliente, idProduto, qtdPedido FROM pedido;");
+			while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+   				echo "ID CLIENTE: {$linha['idCliente']} - ID PRODUTO: {$linha['idProduto']} - QTD: {$linha['qtdPedido']}<br/>";
+			}
+		}
+	}
+?>
+\ No newline at end of file
